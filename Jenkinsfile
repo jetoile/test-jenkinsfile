@@ -5,7 +5,7 @@ node ('master') {
 	checkout scm
 
 	def mvnHome = tool name: 'mvn-3.3.9', type: 'maven'
-	dev javaHome = tool name: 'jdk1.8u112', type: 'jdk'
+	def javaHome = tool name: 'jdk1.8u112', type: 'jdk'
 	env.PATH = "${javaHome}/bin:${mvnHome}/bin:${env.PATH}"
 
 	sh 'mvn clean deploy'
