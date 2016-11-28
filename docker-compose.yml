@@ -1,0 +1,14 @@
+version: "2"
+
+services:
+  nexus:
+    image: sonatype/nexus
+    volumes:
+      - "/tmp/nexus:/sonatype-work"
+    ports:
+      - "8081:8081"
+  jenkins:
+    image: jenkinsci/jenkins
+    ports:
+      - "8080:8080"
+      - "50000:50000"

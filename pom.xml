@@ -15,11 +15,11 @@
     <distributionManagement>
         <snapshotRepository>
             <id>local</id>
-            <url>http://localhost:8081/nexus/content/repositories/snapshots</url>
+            <url>http://nexus:8081/nexus/content/repositories/snapshots</url>
         </snapshotRepository>
         <repository>
             <id>local</id>
-            <url>http://localhost:8081/nexus/content/repositories/releases/</url>
+            <url>http://nexus:8081/nexus/content/repositories/releases/</url>
         </repository>
     </distributionManagement>
 
