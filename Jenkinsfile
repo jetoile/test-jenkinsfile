@@ -1,9 +1,9 @@
 #!/usr/bin/env/groovy
 
-
-stage 'Build'
+node (master) {
+	stage 'Build'
 	checkout scm
-	
+
 	def mvnHome = tool name: 'mvn-3.3.9', type: 'maven'
 	dev javaHome = tool name: 'jdk1.8u112', type: 'jdk'
 	env.PATH = "${javaHome}/bin:${mvnHome}/bin:${env.PATH}"
@@ -12,8 +12,8 @@ stage 'Build'
 
 	if (env.BRANCH_NAME == "master") {
 		stage 'Approve'
-			def originalV = version() 
-			def major = originalV[0]
+		def originalV = version()
+		def major = originalV[0]
 			def minor = originalV[1].toInteger() + 1
 			def minor2 = originalV[1]
 			def v = "${major}.${minor}"
@@ -44,21 +44,22 @@ stage 'Build'
 			}
 
 		stage 'Deploy'
-			if (didTimeout) {
-				echo "no input was received before timeout"
-			} else if (userInput == true) {
-				echo "this is successful"
-			} else {
-				def releaseVersion = userInput['releaseVersion']
-				def devVersion = userInput['devVersion']
-				def username = userInput['username']
-				def password = userInput['password']
+		if (didTimeout) {
+			echo "no input was received before timeout"
+		} else if (userInput == true) {
+			echo "this is successful"
+		} else {
+			def releaseVersion = userInput['releaseVersion']
+			def devVersion = userInput['devVersion']
+			def username = userInput['username']
+			def password = userInput['password']
 
-				def pomArtifact = "toto"
-				sh "mvn --batch-mode release:prepare release:perform -DreleaseVersion=${releaseVersion} -DdevelopmentVersion=${devVersion} -Dusername=${username} -Dpassword=${password}"
+			def pomArtifact = "toto"
+			sh "mvn --batch-mode release:prepare release:perform -DreleaseVersion=${releaseVersion} -DdevelopmentVersion=${devVersion} -Dusername=${username} -Dpassword=${password}"
 
-			}
+		}
 	}
+}
 
 def version() {
 	def matcher = readFile('pom.xml') =~ '<version>(.+)-.*</version>'
