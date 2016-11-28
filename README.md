@@ -2,6 +2,11 @@ Only for a reminder. Do not use it!! ;)
 
 #Start local Nexus/Jenkins
 
+```
+mkdir /tmp/nexus
+sudo chown -R 200 /tmp/nexus                
+```
+
 docker-compose up
 
 #Configure local Jenkins
